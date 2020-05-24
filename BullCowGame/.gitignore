@@ -82,3 +82,16 @@ DerivedDataCache/*
 /cmake-build-debug/
 /DerivedDataCache/
 /CMakeLists.txt
+/.idea/.idea.BullCowGame/.idea/.gitignore
+/.idea/.gitignore
+/.idea/.name
+/.idea/BullCowGame.iml
+/BullCowGame.sln.DotSettings.user
+/.idea/.idea.BullCowGame/.idea/encodings.xml
+/.idea/.idea.BullCowGame/.idea/indexLayout.xml
+/.idea/.idea.BullCowGame/.idea/misc.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/.idea.BullCowGame/riderModule.iml
+/.idea/.idea.BullCowGame/.idea/vcs.xml
+/.idea/vcs.xml
