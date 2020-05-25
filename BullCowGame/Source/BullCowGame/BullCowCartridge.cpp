@@ -9,7 +9,7 @@ void UBullCowCartridge::BeginPlay() // When the game starts
     DownloadWords();
 }
 
-void UBullCowCartridge::OnInput(const FString &Input) // When the player hits enter
+void UBullCowCartridge::OnInput(const FString &PlayerInput) // When the player hits enter
 {
     if (bGameOver)
     {
@@ -18,14 +18,16 @@ void UBullCowCartridge::OnInput(const FString &Input) // When the player hits en
         return;
     }
     
-    ProcessGame(Input);
+    ProcessGame(PlayerInput);
 }
 
 void UBullCowCartridge::SetupGame()
 {
     PrintLine(TEXT("Valid Words : %i"),HiddenWords.Num());
+
+    const int32 Index = FMath::RandRange(0,HiddenWords.Num()-1);
     
-    HiddenWord = HiddenWords[0];
+    HiddenWord = HiddenWords[Index];
     Lives = HiddenWord.Len();
     bGameOver = false;
 
@@ -33,7 +35,7 @@ void UBullCowCartridge::SetupGame()
     PrintLine(TEXT("Welcome to Bull Cows!"));
     PrintLine(TEXT("Guess the %i letter word!"),HiddenWord.Len());
     PrintLine(TEXT("You have %i lives."),Lives);
-    PrintLine(TEXT("Press <Enter> to continue..."));
+    PrintLine(TEXT("Press <Enter> to continue <%s>..."),*HiddenWord);
 }
 
 void UBullCowCartridge::EndGame()
@@ -43,7 +45,7 @@ void UBullCowCartridge::EndGame()
     PrintLine(TEXT("Press <Enter> to play again..."));
 }
 
-void UBullCowCartridge::ProcessGame(FString Guess)
+void UBullCowCartridge::ProcessGame(const FString& Guess)
 {
     if(HiddenWord == Guess)
     {
@@ -78,10 +80,12 @@ void UBullCowCartridge::ProcessGame(FString Guess)
         return;
     }
 
+    const FBullCowCount Score = GetBullCow(Guess);
+    PrintLine(TEXT("You have %i Bulls and %i Cows"),Score.Bulls,Score.Cows);
     PrintLine(TEXT("Guess again,you have %i lives left!"),Lives);
 }
 
-bool UBullCowCartridge::IsIsogram(FString Word) const
+bool UBullCowCartridge::IsIsogram(const FString& Word)
 {
     for (int32 i = 0; i < Word.Len()-1; ++i)
     {
@@ -91,6 +95,28 @@ bool UBullCowCartridge::IsIsogram(FString Word) const
         }
     }
     return true;
+}
+
+FBullCowCount UBullCowCartridge::GetBullCow(const FString Guess) const
+{
+    FBullCowCount Count;
+    for (int32 i = 0; i < Guess.Len(); ++i)
+    {
+        if(Guess[i]==HiddenWord[i])
+        {
+            Count.Bulls++;
+            continue;
+        }
+
+        for (int32 j = 0; j < Guess.Len(); ++j)
+        {
+            if(Guess[i]==HiddenWord[j])
+            {
+                Count.Cows++;break;
+            }
+        }
+    }
+    return Count;
 }
 
 void UBullCowCartridge::DownloadWords()

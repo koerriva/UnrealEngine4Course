@@ -8,6 +8,13 @@
 #include "BullCowCartridge.generated.h"
 
 const TArray<FString> Words = {TEXT("cakes"),TEXT("water"),TEXT("plums"),TEXT("kings"),TEXT("knife")};
+USTRUCT()
+struct FBullCowCount
+{
+	GENERATED_BODY()
+	int32 Bulls=0;
+	int32 Cows=0;
+};
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class BULLCOWGAME_API UBullCowCartridge : public UCartridge
@@ -20,8 +27,9 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 
 	void SetupGame();
 	void EndGame();
-	void ProcessGame(FString Guess);
-	bool IsIsogram(FString Word) const;
+	void ProcessGame(const FString& Guess);
+	static bool IsIsogram(const FString& Word);
+	FBullCowCount GetBullCow(const FString Guess) const;
 
 	void DownloadWords();
 	void OnDownloadComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bSuccess);
