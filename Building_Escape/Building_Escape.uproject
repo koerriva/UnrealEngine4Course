@@ -18,5 +18,9 @@
 			"Name": "RiderLink",
 			"Enabled": true
 		}
+	],
+	"TargetPlatforms": [
+		"WindowsNoEditor",
+		"WindowsNoEditorWin32"
 	]
 }

@@ -19,7 +19,7 @@ void UWorldPosition::BeginPlay()
 
 	const FString ObjectName = GetOwner()->GetName();
 	const FString ObjectPosition = GetOwner()->GetActorLocation().ToString();
-	UE_LOG(LogTemp, Error, TEXT("%s is at position %s"), *ObjectName,*ObjectPosition);
+	UE_LOG(LogTemp, Warning, TEXT("%s is at position %s"), *ObjectName,*ObjectPosition);
 }
 
 // Called every frame
